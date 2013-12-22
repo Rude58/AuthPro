@@ -5,10 +5,10 @@
 __PocketMine Plugin__
 name=AuthPro
 description=Fast Authenticate Service
-version=1.0.1-Alpha
+version=1.1.0-Alpha
 author=Kevin Wang
 class=AuthServ
-apiversion=10
+apiversion=11
 */
 
 
@@ -116,8 +116,7 @@ class AuthServ implements Plugin{
 
 
 	private function hash($salt, $password){
-		return($password);
-		//return Utils::strToHex(hash("sha512", $password . $salt, true) ^ hash("whirlpool", $salt . $password, true));
+		return(md5($password));
 	}
 
 
