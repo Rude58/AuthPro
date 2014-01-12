@@ -5,12 +5,17 @@
 __PocketMine Plugin__
 name=AuthPro
 description=Fast Authenticate Service
-version=1.1.0-Alpha
+version=1.1.1-Alpha
 author=Kevin Wang
 class=AuthServ
 apiversion=11
 */
 
+/*
+Change Log: 
+ * 1.1.1-Alpha
+	- Fixed errors
+*/
 
 class AuthServ implements Plugin{
 	private $api, $server, $config, $sessions, $lastBroadcast = 0;
@@ -92,6 +97,7 @@ class AuthServ implements Plugin{
 
 
 		foreach($this->sessions as $CID => $timer){
+			if(!($this->server->clients[$CID] instanceof Player)){continue;}
 			if($timer !== true and $timer !== false){				
 				if($broadcast === true){
 					$d = file_exists($this->userDir . strtolower($this->server->clients[$CID]->iusername) . ".yml");
@@ -182,6 +188,7 @@ class AuthServ implements Plugin{
 				$this->sessions[$data->CID] = false;
 				break;
 			case "player.spawn":
+				if(!(isset($this->sessions[$data->CID]))){return;}
 				if($this->sessions[$data->CID] !== true){
 					$this->sessions[$data->CID] = time();
 					$data->blocked = true;
