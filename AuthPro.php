@@ -5,7 +5,7 @@
 __PocketMine Plugin__
 name=AuthPro
 description=Fast Authenticate Service
-version=1.1.1-Alpha
+version=1.1.2-Alpha
 author=Kevin Wang
 class=AuthServ
 apiversion=11
@@ -13,6 +13,8 @@ apiversion=11
 
 /*
 Change Log: 
+ * 1.1.2-Alpha
+    - Fixed Undefined offset at line 100 (Issue 2 by @Georggi)
  * 1.1.1-Alpha
 	- Fixed errors
 */
@@ -97,6 +99,7 @@ class AuthServ implements Plugin{
 
 
 		foreach($this->sessions as $CID => $timer){
+			if(!(isset($this->server->clients[$CID]))){continue;}
 			if(!($this->server->clients[$CID] instanceof Player)){continue;}
 			if($timer !== true and $timer !== false){				
 				if($broadcast === true){
